@@ -7,44 +7,45 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body {
-            background: #f7f7f7;
-        }
-        .card {
-            border-radius: 20px;
-        }
-        .btn-circle {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            padding: 0;
-        }
+        body { background: #f7f7f7; padding-bottom: 80px; } /* Отступ снизу, чтобы кнопка не закрывала контент */
+        .card { border-radius: 20px; border: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .btn-circle { width: 32px; height: 32px; border-radius: 50%; padding: 0; line-height: 30px; font-weight: bold; }
+        
+        /* Кнопка оформить висит снизу всегда */
         #orderBtn {
             position: fixed;
             bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 20px;
+            right: 20px;
+            width: calc(100% - 40px);
             display: none;
+            z-index: 100;
+            border-radius: 12px;
+            padding: 15px;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 4px 15px rgba(25, 135, 84, 0.4);
         }
     </style>
 </head>
 <body>
 <div class="container py-4">
-    <h2 class="text-center mb-4">Меню</h2>
+    <h2 class="text-center mb-4 fw-bold">🍣 Меню</h2>
 
     <div id="productList" class="row g-3">
         <!-- Роллы -->
         <div class="col-12">
-            <div class="card p-3 shadow-sm">
+            <div class="card p-3">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h5 class="mb-1">Роллы</h5>
-                        <p class="text-muted mb-0">Вкусные роллы</p>
+                        <h5 class="mb-1 fw-bold">Сет Филадельфия</h5>
+                        <p class="text-muted mb-0 small">Лосось, сыр, огурец (800г)</p>
+                        <div class="mt-2 fw-bold text-success">1200 ₽</div>
                     </div>
-                    <div class="d-flex align-items-center">
-                        <button class="btn btn-outline-secondary btn-circle" onclick="changeCount('rolls', -1)">-</button>
-                        <span id="count-rolls" class="mx-3 fs-5">0</span>
-                        <button class="btn btn-outline-primary btn-circle" onclick="changeCount('rolls', 1)">+</button>
+                    <div class="d-flex align-items-center bg-light rounded-pill p-1">
+                        <button class="btn btn-sm btn-white btn-circle shadow-sm" onclick="changeCount('rolls', -1)">-</button>
+                        <span id="count-rolls" class="mx-3 fw-bold">0</span>
+                        <button class="btn btn-sm btn-white btn-circle shadow-sm" onclick="changeCount('rolls', 1)">+</button>
                     </div>
                 </div>
             </div>
@@ -52,16 +53,17 @@
 
         <!-- Пицца -->
         <div class="col-12">
-            <div class="card p-3 shadow-sm">
+            <div class="card p-3">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h5 class="mb-1">Пицца</h5>
-                        <p class="text-muted mb-0">Сырная пицца</p>
+                        <h5 class="mb-1 fw-bold">Пицца Пепперони</h5>
+                        <p class="text-muted mb-0 small">Острая колбаска, сыр</p>
+                        <div class="mt-2 fw-bold text-success">650 ₽</div>
                     </div>
-                    <div class="d-flex align-items-center">
-                        <button class="btn btn-outline-secondary btn-circle" onclick="changeCount('pizza', -1)">-</button>
-                        <span id="count-pizza" class="mx-3 fs-5">0</span>
-                        <button class="btn btn-outline-primary btn-circle" onclick="changeCount('pizza', 1)">+</button>
+                    <div class="d-flex align-items-center bg-light rounded-pill p-1">
+                        <button class="btn btn-sm btn-white btn-circle shadow-sm" onclick="changeCount('pizza', -1)">-</button>
+                        <span id="count-pizza" class="mx-3 fw-bold">0</span>
+                        <button class="btn btn-sm btn-white btn-circle shadow-sm" onclick="changeCount('pizza', 1)">+</button>
                     </div>
                 </div>
             </div>
@@ -69,16 +71,17 @@
 
         <!-- Кола -->
         <div class="col-12">
-            <div class="card p-3 shadow-sm">
+            <div class="card p-3">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h5 class="mb-1">Кола</h5>
-                        <p class="text-muted mb-0">Освежающий напиток</p>
+                        <h5 class="mb-1 fw-bold">Coca-Cola</h5>
+                        <p class="text-muted mb-0 small">0.5 л, холодная</p>
+                        <div class="mt-2 fw-bold text-success">100 ₽</div>
                     </div>
-                    <div class="d-flex align-items-center">
-                        <button class="btn btn-outline-secondary btn-circle" onclick="changeCount('cola', -1)">-</button>
-                        <span id="count-cola" class="mx-3 fs-5">0</span>
-                        <button class="btn btn-outline-primary btn-circle" onclick="changeCount('cola', 1)">+</button>
+                    <div class="d-flex align-items-center bg-light rounded-pill p-1">
+                        <button class="btn btn-sm btn-white btn-circle shadow-sm" onclick="changeCount('cola', -1)">-</button>
+                        <span id="count-cola" class="mx-3 fw-bold">0</span>
+                        <button class="btn btn-sm btn-white btn-circle shadow-sm" onclick="changeCount('cola', 1)">+</button>
                     </div>
                 </div>
             </div>
@@ -86,11 +89,11 @@
     </div>
 </div>
 
-<button id="orderBtn" class="btn btn-success btn-lg px-5" onclick="submitOrder()">Оформить заказ</button>
+<button id="orderBtn" class="btn btn-success" onclick="submitOrder()">Оформить заказ</button>
 
 <script>
     const tg = window.Telegram.WebApp;
-    tg.expand();
+    tg.expand(); // Растянуть на весь экран
 
     const cart = {
         rolls: 0,
@@ -105,13 +108,32 @@
     }
 
     function updateOrderButton() {
-        const total = cart.rolls + cart.pizza + cart.cola;
-        document.getElementById('orderBtn').style.display = total > 0 ? 'block' : 'none';
+        // Считаем общую сумму (примерно)
+        let totalItems = cart.rolls + cart.pizza + cart.cola;
+        let totalPrice = (cart.rolls * 1200) + (cart.pizza * 650) + (cart.cola * 100);
+
+        const btn = document.getElementById('orderBtn');
+        if (totalItems > 0) {
+            btn.style.display = 'block';
+            btn.innerText = `Заказать на ${totalPrice} ₽`;
+        } else {
+            btn.style.display = 'none';
+        }
     }
 
     function submitOrder() {
-        const order = JSON.stringify(cart);
-        tg.sendData(order);
+        // Формируем красивый текст для JSON
+        // Мы отправляем не просто цифры, а сразу текст, чтобы боту было легче
+        const orderData = {
+            shop_id: "1", // на будущее
+            items: cart
+        };
+
+        // Отправляем данные
+        tg.sendData(JSON.stringify(orderData));
+        
+        // ВАЖНО: Закрываем окно принудительно
+        tg.close();
     }
 </script>
 
