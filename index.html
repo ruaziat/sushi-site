@@ -1,119 +1,56 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Доставка суши</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Суши Школа</title>
+    <!-- Подключаем Телеграм -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <!-- Подключаем красоту (Bootstrap) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
-            background: #f7f7f7;
-        }
-        .card {
-            border-radius: 20px;
-        }
-        .btn-circle {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            padding: 0;
-        }
-        #orderBtn {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: none;
-        }
+        body { padding: 20px; background-color: var(--tg-theme-bg-color, #fff); color: var(--tg-theme-text-color, #000); }
+        .card { border: none; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .btn-primary { background-color: #ff6b00; border: none; width: 100%; padding: 15px; font-size: 18px; font-weight: bold; }
     </style>
 </head>
 <body>
-<div class="container py-4">
-    <h2 class="text-center mb-4">Меню</h2>
-
-    <div id="productList" class="row g-3">
-        <!-- Роллы -->
-        <div class="col-12">
-            <div class="card p-3 shadow-sm">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h5 class="mb-1">Роллы</h5>
-                        <p class="text-muted mb-0">Вкусные роллы</p>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <button class="btn btn-outline-secondary btn-circle" onclick="changeCount('rolls', -1)">-</button>
-                        <span id="count-rolls" class="mx-3 fs-5">0</span>
-                        <button class="btn btn-outline-primary btn-circle" onclick="changeCount('rolls', 1)">+</button>
-                    </div>
-                </div>
+    <div class="container text-center">
+        <h3>🍣 Тестовое Меню</h3>
+        <p class="text-muted">Проверяем работу заказа</p>
+        
+        <!-- Карточка товара -->
+        <div class="card p-3 mb-3">
+            <img src="https://emojigraph.org/media/apple/sushi_1f363.png" class="card-img-top" style="width: 100px; margin: 0 auto;">
+            <div class="card-body">
+                <h5 class="card-title">Сет "Филадельфия"</h5>
+                <p class="card-text">1200 руб.</p>
             </div>
         </div>
 
-        <!-- Пицца -->
-        <div class="col-12">
-            <div class="card p-3 shadow-sm">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h5 class="mb-1">Пицца</h5>
-                        <p class="text-muted mb-0">Сырная пицца</p>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <button class="btn btn-outline-secondary btn-circle" onclick="changeCount('pizza', -1)">-</button>
-                        <span id="count-pizza" class="mx-3 fs-5">0</span>
-                        <button class="btn btn-outline-primary btn-circle" onclick="changeCount('pizza', 1)">+</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Кола -->
-        <div class="col-12">
-            <div class="card p-3 shadow-sm">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h5 class="mb-1">Кола</h5>
-                        <p class="text-muted mb-0">Освежающий напиток</p>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <button class="btn btn-outline-secondary btn-circle" onclick="changeCount('cola', -1)">-</button>
-                        <span id="count-cola" class="mx-3 fs-5">0</span>
-                        <button class="btn btn-outline-primary btn-circle" onclick="changeCount('cola', 1)">+</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- Главная кнопка -->
+        <button id="btn" class="btn btn-primary" onclick="sendOrder()">ЗАКАЗАТЬ</button>
     </div>
-</div>
 
-<button id="orderBtn" class="btn btn-success btn-lg px-5" onclick="submitOrder()">Оформить заказ</button>
+    <script>
+        let tg = window.Telegram.WebApp; // Получаем объект Телеграма
+        tg.expand(); // Раскрываем на весь экран
 
-<script>
-    const tg = window.Telegram.WebApp;
-    tg.expand();
+        function sendOrder() {
+            // Вот ту самую "Записку" (JSON) мы готовим
+            let data = {
+                order_id: "test_123",
+                items: "Сет Филадельфия",
+                price: 1200,
+                comment: "Хочу быстрее!"
+            };
 
-    const cart = {
-        rolls: 0,
-        pizza: 0,
-        cola: 0
-    };
-
-    function changeCount(item, delta) {
-        cart[item] = Math.max(0, cart[item] + delta);
-        document.getElementById(`count-${item}`).innerText = cart[item];
-        updateOrderButton();
-    }
-
-    function updateOrderButton() {
-        const total = cart.rolls + cart.pizza + cart.cola;
-        document.getElementById('orderBtn').style.display = total > 0 ? 'block' : 'none';
-    }
-
-    function submitOrder() {
-        const order = JSON.stringify(cart);
-        tg.sendData(order);
-    }
-</script>
-
+            // Отправляем записку боту
+            tg.sendData(JSON.stringify(data)); 
+            
+            // Закрываем окно
+            tg.close();
+        }
+    </script>
 </body>
 </html>
